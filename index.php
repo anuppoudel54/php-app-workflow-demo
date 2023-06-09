@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PHP Calculator</title>
+    <title>PHP Scientific Calculator</title>
 </head>
 <body>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -15,6 +15,11 @@
             <option value="-">-</option>
             <option value="*">*</option>
             <option value="/">/</option>
+            <option value="sqrt">Square Root</option>
+            <option value="pow">Power</option>
+            <option value="sin">Sine</option>
+            <option value="cos">Cosine</option>
+            <option value="tan">Tangent</option>
         </select><br><br>
         <input type="submit" value="Calculate">
     </form>
@@ -23,22 +28,37 @@
         $num1 = $_POST["num1"];
         $num2 = $_POST["num2"];
         $operator = $_POST["operator"];
-        
-        if (!empty($num1) && !empty($num2)) {
-            if ($operator == '+') {
-                $result = $num1 + $num2;
-            } elseif ($operator == '-') {
-                $result = $num1 - $num2;
-            } elseif ($operator == '*') {
-                $result = $num1 * $num2;
-            } elseif ($operator == '/') {
-                $result = $num1 / $num2;
+
+        $result = "";
+
+        if (!empty($num1)) {
+            if ($operator == 'sqrt') {
+                $result = sqrt($num1);
+            } elseif (empty($num2)) {
+                $result = "Please enter both numbers.";
             } else {
-                $result = "Invalid operator";
+                if ($operator == '+') {
+                    $result = $num1 + $num2;
+                } elseif ($operator == '-') {
+                    $result = $num1 - $num2;
+                } elseif ($operator == '*') {
+                    $result = $num1 * $num2;
+                } elseif ($operator == '/') {
+                    $result = $num1 / $num2;
+                } elseif ($operator == 'pow') {
+                    $result = pow($num1, $num2);
+                } elseif ($operator == 'sin') {
+                    $result = sin($num1);
+                } elseif ($operator == 'cos') {
+                    $result = cos($num1);
+                } elseif ($operator == 'tan') {
+                    $result = tan($num1);
+                } else {
+                    $result = "Invalid operator";
+                }
             }
+
             echo "<br><strong>Result:</strong> $result";
-        } else {
-            echo "Please enter both numbers.";
         }
     }
     ?>
